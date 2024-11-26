@@ -32,7 +32,7 @@ return;
 
 try {
 const response = await
-fetch('https://user-product-api-gzwy.onrender.com/api/auth/reset-forget-password',
+fetch('https://user-product-api.vercel.app/api/auth/reset-forget-password',
 {
 method: 'POST',
 headers: {
