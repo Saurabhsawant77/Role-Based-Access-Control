@@ -38,3 +38,6 @@ It supports four roles: Super Admin, Admin, Partner, and Customer, each with dis
 1. Clone the repository:
    ```bash
    git clone https://github.com/Saurabhsawant77/Role-Based-Access-Control.git
+   cd Role-Based-Access-Control
+   npm i
+   npm start
