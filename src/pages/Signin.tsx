@@ -62,37 +62,49 @@ const SignIn = () => {
         </Typography>
 
         <Controller
-          name="email"
-          control={control}
-          defaultValue=""
-          rules={{
-            required: "Email is required",
-            validate: {
-              noSpaces: (value) =>
-                !/\s/.test(value) || "Email cannot contain spaces",
-              validEmail: (value) =>
-                (/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value) &&
-                  !/\.\./.test(value)) ||
-                "This is not a valid email",
-            },
-          }}
-          render={({ field }) => (
-            <TextField
-              {...field}
-              fullWidth
-              label="Email *"
-              type="email"
-              margin="normal"
-              error={!!errors.email}
-              helperText={errors.email ? (errors.email.message as string) : ""}
-              sx={{
-                "& .MuiInputBase-root": {
-                  borderRadius: 2,
-                },
-              }}
-            />
-          )}
-        />
+  name="email"
+  control={control}
+  defaultValue=""
+  rules={{
+    required: "Email is required",
+    pattern: {
+      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i, // Matches valid email format
+      message: "This is not a valid email",
+    },
+  }}
+  render={({ field }) => (
+    <TextField
+      {...field}
+      fullWidth
+      label="Email *"
+      type="email"
+      margin="normal"
+      error={!!errors.email}
+      helperText={errors.email ? (errors.email.message as string) : ""}
+      sx={{
+        "& .MuiInputBase-root": {
+          borderRadius: 2,
+        },
+      }}
+      inputProps={{
+        // Block the spacebar key to prevent spaces
+        onKeyDown: (e) => {
+          if (e.key === " ") {
+            e.preventDefault(); // Block space input
+          }
+        },
+        // Block pasting if it contains spaces
+        onPaste: (e) => {
+          const pastedText = e.clipboardData.getData("text");
+          if (/\s/.test(pastedText)) {
+            e.preventDefault(); // Prevent pasting if there are spaces
+          }
+        },
+      }}
+    />
+  )}
+/>
+
 
         <Controller
           name="password"

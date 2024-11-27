@@ -55,38 +55,54 @@ Forget Password
 </Typography>
 
 <Controller
-name="email"
-control={control}
-defaultValue=""
-rules={{
-required: "Email is required",
-validate: {
-noSpaces: (value) =>
-!/\s/.test(value) || "Email cannot contain spaces",
-validEmail: (value) =>
-/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value) && // Valid email format
-!/\.\./.test(value) && // Disallow consecutive periods
-!/^\.|\.$/.test(value) // Disallow starting or ending with a dot
-|| "This is not a valid email",
-},
-}}
-render={({ field }) => (
-<TextField
-{...field}
-fullWidth
-label="Email *"
-type="email"
-margin="normal"
-error={!!errors.email}
-helperText={errors.email?.message || ""}
-sx={{
-"& .MuiInputBase-root": {
-borderRadius: 2,
-},
-}}
+  name="email"
+  control={control}
+  defaultValue=""
+  rules={{
+    required: "Email is required",
+    validate: {
+      noSpaces: (value) =>
+        !/\s/.test(value) || "Email cannot contain spaces", // Prevent spaces
+      validEmail: (value) =>
+        /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value) && // Valid email format
+        !/\.\./.test(value) && // Disallow consecutive periods
+        !/^\.|\.$/.test(value) || // Disallow starting or ending with a dot
+        "This is not a valid email",
+    },
+  }}
+  render={({ field }) => (
+    <TextField
+      {...field}
+      fullWidth
+      label="Email *"
+      type="email"
+      margin="normal"
+      error={!!errors.email}
+      helperText={errors.email?.message || ""}
+      sx={{
+        "& .MuiInputBase-root": {
+          borderRadius: 2,
+        },
+      }}
+      inputProps={{
+        // Block space input
+        onKeyDown: (e) => {
+          if (e.key === " ") {
+            e.preventDefault(); // Block spacebar key
+          }
+        },
+        // Block pasting if it contains spaces
+        onPaste: (e) => {
+          const pastedText = e.clipboardData.getData("text");
+          if (/\s/.test(pastedText)) {
+            e.preventDefault(); // Prevent pasting if there are spaces
+          }
+        },
+      }}
+    />
+  )}
 />
-)}
-/>
+
 
 <Button type="submit" variant="contained" sx={{ mt: 2, borderRadius:
 2, backgroundColor: "#3A5B22" }} fullWidth disabled={loading}>
