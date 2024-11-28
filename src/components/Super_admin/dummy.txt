@@ -13,13 +13,14 @@ interface Product {
   image: { image: string };
 }
 
+
 const Products = () => {
   const [products, setProducts] = useState<Product[]>([]);
   console.log(products)
   const [loading, setLoading] = useState<boolean>(true);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const token = localStorage.getItem("token");
-  const apiUrl = "https://user-product-api.vercel.app/api/admin";
+  const apiUrl = "https://user-product-api-gzwy.onrender.com/api/admin";
 
   const fetchProducts = async () => {
     setLoading(true);
@@ -40,6 +41,7 @@ const Products = () => {
   useEffect(() => {
     fetchProducts();
   }, []);
+
 
   const handleSearch = () => {
     const filteredProducts = products.filter(product =>
@@ -77,8 +79,7 @@ const Products = () => {
           size="small"
           variant="outlined"
           value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          // onChange={handleChange}
+              onChange={(e) => setSearchTerm(e.target.value)}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">

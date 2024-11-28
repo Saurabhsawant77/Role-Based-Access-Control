@@ -80,78 +80,77 @@ const SignUp = () => {
         </Typography>
 
         <Controller
-  name="username"
-  control={control}
-  defaultValue=""
-  rules={{
-    required: "Name is required",
-    pattern: {
-      value: /^[a-zA-Z]+( [a-zA-Z]+)*$/, // Only allows alphabets with single spaces
-      message: "Only alphabets are allowed",
-    },
-    maxLength: {
-      value: 20,
-      message: "Name cannot exceed 20 characters",
-    },
-  }}
-  render={({ field }) => (
-    <TextField
-      {...field}
-      fullWidth
-      label="Name *"
-      margin="normal"
-      onChange={(e) => {
-        const cleanedValue = e.target.value.replace(/\s{2,}/g, " "); // Remove multiple spaces
-        field.onChange(cleanedValue); // Update the field value
-      }}
-      error={!!errors.username}
-      helperText={errors.username?.message || ""}
-      sx={{
-        "& .MuiInputBase-root": {
-          borderRadius: 2,
-        },
-      }}
-    />
-  )}
-/>
+          name="username"
+          control={control}
+          defaultValue=""
+          rules={{
+            required: "Name is required",
+            pattern: {
+              value: /^[a-zA-Z]+( [a-zA-Z]+)*$/, // Only allows alphabets with single spaces
+              message: "Only alphabets are allowed",
+            },
+            maxLength: {
+              value: 20,
+              message: "Name cannot exceed 20 characters",
+            },
+          }}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              fullWidth
+              label="Name *"
+              margin="normal"
+              onChange={(e) => {
+                const cleanedValue = e.target.value.replace(/\s{2,}/g, " "); // Remove multiple spaces
+                field.onChange(cleanedValue); // Update the field value
+              }}
+              error={!!errors.username}
+              helperText={errors.username?.message || ""}
+              sx={{
+                "& .MuiInputBase-root": {
+                  borderRadius: 2,
+                },
+              }}
+            />
+          )}
+        />
 
-<Controller
-  name="email"
-  control={control}
-  defaultValue=""
-  rules={{
-    required: "Email is required",
-    pattern: {
-      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i, // Matches valid email format
-      message: "This is not a valid email",
-    },
-  }}
-  render={({ field }) => (
-    <TextField
-      {...field}
-      fullWidth
-      label="Email *"
-      type="email"
-      margin="normal"
-      error={!!errors.email}
-      helperText={errors.email?.message || ""}
-      sx={{
-        "& .MuiInputBase-root": {
-          borderRadius: 2,
-        },
-      }}
-      inputProps={{
-        // Prevent spaces from being entered at all
-        onKeyDown: (e) => {
-          if (e.key === " ") {
-            e.preventDefault(); // Block the spacebar key
-          }
-        },
-      }}
-    />
-  )}
-/>
-
+        <Controller
+          name="email"
+          control={control}
+          defaultValue=""
+          rules={{
+            required: "Email is required",
+            pattern: {
+              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i, // Matches valid email format
+              message: "This is not a valid email",
+            },
+          }}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              fullWidth
+              label="Email *"
+              type="email"
+              margin="normal"
+              error={!!errors.email}
+              helperText={errors.email?.message || ""}
+              sx={{
+                "& .MuiInputBase-root": {
+                  borderRadius: 2,
+                },
+              }}
+              inputProps={{
+                // Prevent spaces from being entered at all
+                onKeyDown: (e) => {
+                  if (e.key === " ") {
+                    e.preventDefault(); // Block the spacebar key
+                  }
+                },
+              }}
+            />
+          )}
+        />
 
         <Controller
           name="password"
