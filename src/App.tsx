@@ -1,5 +1,6 @@
 import React, { useState, createContext } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { Analytics } from "@vercel/analytics/react"
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -55,6 +56,7 @@ const Layout = () => {
             </div>
           )}
           <div className={`content ${isToggleSidebar ? 'toggle' : ''}`}>
+          <Analytics />
             <Routes>
               <Route path="/partner/dashboard" element={<Dashboard />} />
               <Route path="/" element={<SignIn />} />
