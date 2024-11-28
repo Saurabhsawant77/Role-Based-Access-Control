@@ -13,7 +13,7 @@ It supports four roles: Super Admin, Admin, Partner, and Customer, each with dis
   - Can view all Admins, Partners, and Customers.
 
 - **Admin:**
-  - Can add/edit/delete Partners.
+  - Can add/edit Partners.
   - Can view products added by Partners under their management.
   - Can verify and reject products.
 
