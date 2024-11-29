@@ -118,7 +118,7 @@ const ShoppingCart = () => {
         sx={{
           padding: "20px",
           width: "75%",
-          margin: "auto",
+          margin: "auto 22%",
           marginTop: "2%",
           textAlign: "center",
           backgroundColor: "white",
