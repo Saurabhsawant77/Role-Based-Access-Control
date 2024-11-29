@@ -68,7 +68,7 @@ const Admin_verifyed_Products = () => {
       headerName: "Active",
       flex: 1,
       renderCell: (params) => (
-        <span>{params.value ? "True" : "False"}</span>
+        <span>{params.value ? "Approved" : "Rejected"}</span>
       ),
     },
 

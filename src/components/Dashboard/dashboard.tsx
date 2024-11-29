@@ -270,16 +270,16 @@ const Dashboard = () => {
               <Controller
                 name="name"
                 control={control}
-                rules={{ required: "Name is required",
+                rules={{ required: "Product Name is required",
                   pattern: {
                     value: /^[a-zA-Z0-9 ]*$/,
-                    message: "Name should not contain special characters",
+                    message: "Product Name should not contain special characters",
                   },
                   validate: {
                     noEmptySpaces: (value) =>
-                      value.trim() !== "" || "Name cannot be empty spaces",
+                      value.trim() !== "" || "Product Name cannot be empty spaces",
                   },
-                  maxLength: { value: 10, message: "Name cannot exceed 10 characters" },
+                  maxLength: { value: 10, message: "Product Name cannot exceed 10 characters" },
 
                  }}
                 render={({ field }) => (
@@ -287,7 +287,7 @@ const Dashboard = () => {
                     fullWidth
                     margin="dense"
                     variant="filled"
-                    label="Product Name"
+                    label="Product Name*"
                     {...field}
                     error={!!errors.name}
                     helperText={errors.name?.message}
@@ -308,7 +308,7 @@ const Dashboard = () => {
                     fullWidth
                     margin="dense"
                     variant="filled"
-                    label="Description"
+                    label="Description*"
                     {...field}
                     error={!!errors.description}
                     helperText={errors.description?.message}
@@ -324,7 +324,7 @@ const Dashboard = () => {
                     fullWidth
                     margin="dense"
                     variant="filled"
-                    label="Price"
+                    label="Price*"
                     type="number"
                     {...field}
                     error={!!errors.price}
@@ -345,7 +345,7 @@ const Dashboard = () => {
                     fullWidth
                     margin="dense"
                     variant="filled"
-                    label="Rating"
+                    label="Rating*"
                     type="number"
                     {...field}
                     error={!!errors.rating}
@@ -362,8 +362,11 @@ const Dashboard = () => {
                     fullWidth
                     margin="dense"
                     variant="filled"
-                    label="Image"
+                    label="Image*"
                     type="file"
+                    sx = {{
+                      paddingTop : "12px"
+                    }}
                     inputProps={{ accept: "image/*" }}
                     // onChange={(e) => field.onChange(e.target.files ? e.target.files[0] : null)}
                     onChange={(e) => {

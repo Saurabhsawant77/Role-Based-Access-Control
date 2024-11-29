@@ -207,32 +207,46 @@ const Admin_Usermanagement = () => {
           <DialogTitle>{editMode ? "Edit partner" : "Create New partner"}</DialogTitle>
           <form onSubmit={handleSubmit(onSubmit)}>
             <DialogContent>
-              <Controller
-                name="username"
-                control={control}
-                defaultValue=""
-                rules={{
-                  required: "username is required",
-                  // pattern: {
-                  //   value: /^[a-zA-Z]+(?: [a-zA-Z]+)*$/,
-                  //   message:
-                  //     "Only alphabets are allowed, and space is allowed only between words",
-                  // },                
-                  minLength: {
-                    value: 4,
-                    message: "username minimum 4 characters",
-                  },
-                  maxLength: {
-                    value: 20,
-                    message: "username cannot exceed more than 20 characters",
-                  },
-                }}
-                render={({ field }) => (
-                  <TextField fullWidth margin="dense" variant="filled" label="Username*" {...field} error={!!errors.username}
-                  helperText={errors.username?.message || ""}/>
-                )}
-              />
-              <Controller
+            <Controller
+  name="username"
+  control={control}
+  defaultValue=""
+  rules={{
+    required: "Username is required",
+    pattern: {
+      value: /^[a-zA-Z0-9]+$/, // Only alphabets and numbers allowed, no spaces
+      message: "Only alphabets and numbers are allowed",
+    },
+    minLength: {
+      value: 3,
+      message: "Username must be minimum 3 characters",
+    },
+    maxLength: {
+      value: 20,
+      message: "Username cannot exceed more than 20 characters",
+    },
+  }}
+  render={({ field }) => (
+    <TextField
+      {...field}
+      fullWidth
+      margin="dense"
+      variant="filled"
+      label="Username*"
+      error={!!errors.username}
+      helperText={errors.username?.message || ""}
+      inputProps={{
+        // Prevent spaces from being entered
+        onKeyDown: (e) => {
+          if (e.key === " ") {
+            e.preventDefault(); // Block the spacebar key
+          }
+        },
+      }}
+    />
+  )}
+/>
+<Controller
                 name="email"
                 control={control}
                 defaultValue=""
@@ -247,7 +261,7 @@ const Admin_Usermanagement = () => {
                   },
                 }}
                 render={({ field }) => (
-                  <TextField fullWidth margin="dense" variant="filled" label="Email*" {...field} error={!!errors.email}
+                  <TextField fullWidth margin="dense" variant="filled" label="Email*" {...field}  error={!!errors.email}
                   helperText={errors.email?.message || ""} />
                 )}
               />
@@ -264,53 +278,51 @@ const Admin_Usermanagement = () => {
                     },
                     minLength: {
                       value: 8,
-                      message: "Password must be minimum 8 character's",
+                      message: " Password must be minimum 8 character's ",
                     },
                     maxLength: {
-                      value: 8,
-                      message: "Password cannot exceed more than  8 ",
+                      value: 16,
+                      message: "Password cannot exceed more than 16 character's ",
                     },
                   }}
                   render={({ field }) => (
-                    <TextField fullWidth margin="dense" variant="filled" label="Password*" type="password" {...field} error={!!errors.password}
+                    <TextField fullWidth margin="dense" variant="filled" label="Password*" type="password" {...field}  error={!!errors.password}
                     helperText={errors.password?.message || ""}/>
                   )}
                 />
               )}
               <Controller
-                name="phone"
-                control={control}
-                defaultValue=""
-                rules={{
-                  required: "Phone number is required",
-                  validate: {
-                    noSpaces: (value) =>
-                      !/\s/.test(value) || "Phone number cannot contain spaces",
-                    noAlphabets: (value) =>
-                      /^[0-9]*$/.test(value) ||
-                      "Phone number cannot contain alphabets",
-                    startsFromSix: (value) =>
-                      /^[6-9]/.test(value) ||
-                      "Phone number should start from 6 or above",
-                  },
-                  pattern: {
-                    value: /^[0-9]+$/,
-                    message: "Only numbers are allowed",
-                  },
-                  maxLength: {
-                    value: 10,
-                    message: "Phone number cannot exceed more than 10 digits",
-                  },
-                  minLength: {
-                    value: 10,
-                    message: "Phone number must be more than 10 digits",
-                  },
-                }}
-                render={({ field }) => (
-                  <TextField fullWidth margin="dense" variant="filled" label="Phone*" {...field} error={!!errors.phone}
-                  helperText={errors.phone?.message || ""} />
-                )}
-              />
+  name="phone"
+  control={control}
+  defaultValue=""
+  rules={{
+    required: "Phone number is required",
+    validate: {
+      isTenDigits: (value) =>
+        /^[6-9][0-9]{9}$/.test(value) || 
+        "Phone number must start with 6-9 and contain exactly 10 digits",
+    },
+  }}
+  render={({ field }) => (
+    <TextField
+      {...field}
+      fullWidth
+      margin="dense"
+      variant="filled"
+      label="Phone*"
+      error={!!errors.phone}
+      helperText={errors.phone?.message || ""}
+      inputProps={{
+        maxLength: 10, // Prevents typing more than 10 characters
+        onKeyDown: (e) => {
+          if (e.key === " " || isNaN(Number(e.key)) && e.key !== "Backspace") {
+            e.preventDefault(); // Block spaces and non-numeric inputs
+          }
+        },
+      }}
+    />
+  )}
+/>
               <Controller
                 name="address"
                 control={control}
@@ -319,7 +331,7 @@ const Admin_Usermanagement = () => {
                   required: "Address is required",
                   pattern: {
                     value: /^(?!\d+$)(?!.*\s{2,})(?!\s)[a-zA-Z0-9\s,./-]{4,50}$/,
-                    message: "Address should not start from sapce",
+                    message: "Address should not contain special character",
                   },
                   minLength: {
                     value: 4,

@@ -3,6 +3,7 @@ import { Box, Button, TextField, Dialog, DialogActions, DialogContent, DialogCon
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
+import { Height } from "@mui/icons-material";
 
 interface Product {
   _id: number;
@@ -156,7 +157,7 @@ const Admin_Verifying_Products = () => {
   };
 
   return (
-    <div className="card shadow border-0 p-3 mt-5 m-4" style={{ marginTop: "20px" }}>
+    <div className="card shadow border-0 p-3 mt-5 m-4" style={{ marginTop: "20px",height:"85vh" }}>
       <ToastContainer position="top-right" autoClose={2000} />
       <Box m="20px">
         <Box mt={3} sx={{ height: 400, width: "100%" }}>
@@ -164,7 +165,16 @@ const Admin_Verifying_Products = () => {
             rows={products}
             columns={columns}
             getRowId={(row) => row._id}
+            sx={{
+              "& .MuiTablePagination-displayedRows, & .MuiTablePagination-actions": {
+                margin: 0,
+              },
+              "& .MuiTablePagination-selectLabel": {
+                paddingTop: "1rem", 
+              },
+            }}
             loading={loading}
+            style={{height:"70vh"}}
           />
         </Box>
       </Box>
